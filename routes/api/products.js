@@ -2,6 +2,13 @@ const express = require("express")
 const router = express.Router()
 const ProductsService = require("../../services/products");
 
+const validation = require("../../utils/middlewares/validationHandler");
+
+const { productIdSchema, 
+        productTagSchema, 
+        createProductSchema, 
+        updateProductSchema } = require('../../utils/schemas/products')
+
 const productService = new ProductsService();
 
 router.get('/', async function(req, res, next) {
@@ -9,8 +16,6 @@ router.get('/', async function(req, res, next) {
     console.log('req', req.query);
 
     try {
-        //throw new Error('This is an error from the API')
-        myUndefinedFunction();
         const getproducts = await productService.getProducts({ tags })
     
         res.status(200).json({
@@ -39,10 +44,9 @@ router.get('/:productId', async function(req, res, next) {
     }
 })
 
-router.post('/', async function(req, res, next) {
+router.post('/', validation(createProductSchema), async function(req, res, next) {
     const { body: product } = req;
-    console.log('req', req.body)
-
+    
     try {
         const createproduct = await productService.createProduct({ product })
     
@@ -55,20 +59,21 @@ router.post('/', async function(req, res, next) {
     }
 })
 
-router.put('/:productId', async function(req, res, next) {
-    const { productId } = req.params;
-    const { body: product } = req;
-    console.log('req', req.params, req.body )
-
+router.put('/:productId', 
+  validation(productIdSchema, "params"),
+  validation(updateProductSchema), 
+  async function(req, res, next) {
+    const { productId } = req.params
+    const { body: product } = req
     try{
-        const updateproduct = await productService.updateProduct({ productId, product })
+      const updateProduct = await productService.updateProduct({ productId, product })
     
-        res.status(200).json({
-            data: updateproduct,
-            message: 'products Updated'
-        })
-    } catch(err){
-        next(err)
+      res.status(200).json({
+        data: updateProduct,
+        message: 'product updated'
+      })
+    } catch(err) {
+      next(err)
     }
 })
 

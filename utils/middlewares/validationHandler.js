@@ -1,12 +1,16 @@
+const Joi = require('@hapi/joi');
+
 function validate(data, schema){
-    return false;
+    const { error } = schema.validate(data)
+    console.log(error)
+    return error;
 }
 
-function validateHandler(schema, check = "body"){
+function validationHandler(schema, check = "body"){
     return function (req, res, next){
-        const error = validate(req[check],  schema);
+        const error = validate(req[check], schema);
         error ? next(new Error(error)) : next();
-    }
+    };
 }
 
-module.exports = validateHandler;
+module.exports = validationHandler;
