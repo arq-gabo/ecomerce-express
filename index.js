@@ -3,6 +3,7 @@ const path = require("path");
 const boom = require("boom");
 const productsRouter = require('./routes/views/products');
 const productsApiRouter = require('./routes/api/products');
+const authApiRouter = require("./routes/api/auth");
 const { logErrors,
         wrapErrors,
         clientErrorHandler,
@@ -26,6 +27,7 @@ app.set("view engine", "pug");
 // Routes
 app.use("/products", productsRouter);
 app.use("/api/products", productsApiRouter)
+app.use("/api/auth", authApiRouter);
 
 // Redirect
 app.get('/', function(req, res){
