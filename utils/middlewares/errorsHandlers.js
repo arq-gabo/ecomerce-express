@@ -1,4 +1,5 @@
 const boom = require("boom");
+const debug = require("debug")("app:error");
 const Sentry = require('@sentry/node');
 const Tracing = require("@sentry/tracing");
 const { config } = require('../../config');
@@ -19,7 +20,7 @@ Sentry.init({
 
 function logErrors(err, req, res, next){
     Sentry.captureException(err);
-    console.log(err.stack);
+    debug(err.stack);
     next(err);
 }
 

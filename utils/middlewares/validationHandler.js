@@ -3,7 +3,6 @@ const boom = require("boom");
 
 function validate(data, schema){
     const { error } = schema.validate(data)
-    console.log(error)
     return error;
 }
 

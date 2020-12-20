@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require("path");
 const boom = require("boom");
+const debug = require("debug")("app:server");
 const productsRouter = require('./routes/views/products');
 const productsApiRouter = require('./routes/api/products');
 const authApiRouter = require("./routes/api/auth");
@@ -54,5 +55,5 @@ app.use(errorHandler);
 
 // Serve
 const server = app.listen(8000, function() {
-    console.log(`Escuchando en el puerto ${server.address().port}`)
+    debug(`Escuchando en el puerto ${server.address().port}`)
 });

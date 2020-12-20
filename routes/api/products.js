@@ -37,7 +37,6 @@ function productsApi(app){
     
     router.get('/:productId', async function(req, res, next) {
         const { productId } = req.params
-        console.log('req', req.params)
     
         try{
             const getproduct = await productService.getProduct({ productId })
@@ -89,8 +88,7 @@ function productsApi(app){
         passport.authenticate("jwt", { session: false }),
         async function(req, res, next) {
         const { productId } = req.params;
-        console.log(req.params)
-    
+            
         try{
             const deleteproduct = await productService.deleteProduct({ productId })
         
