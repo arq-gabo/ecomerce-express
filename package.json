@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --exit",
-    "test:cover": "nyc npm run test",
-    "start": "node index",
+    "start": "NODE_ENV=production node index",
+    "build": "cd public/assets && cleancss -o main.min.css main.css",
     "dev": "nodemon index",
     "dev:inspect": "nodemon --inspect index",
     "dev:debug": "set DEBUG=express:*,app:*& npm run dev",
-    "debug": "set DEBUG=express:*,app:* npm run start"
+    "debug": "set DEBUG=express:*,app:* npm run start",
+    "test:cover": "nyc npm run test",
+    "test": "mocha --exit"
   },
   "keywords": [],
   "author": "",
@@ -29,10 +30,12 @@
     "passport": "^0.4.1",
     "passport-http": "^0.3.0",
     "passport-jwt": "^4.0.0",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "win-node-env": "^0.4.0"
   },
   "devDependencies": {
     "chalk": "^4.1.0",
+    "clean-css-cli": "^4.3.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
     "proxyquire": "^2.1.3",
