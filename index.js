@@ -56,6 +56,9 @@ app.use(clientErrorHandler);
 app.use(errorHandler);
 
 // Serve
-const server = app.listen(8000, function() {
-    debug(`Escuchando en el puerto ${server.address().port}`)
-});
+// const server = app.listen(8000, function() {
+//     debug(`Escuchando en el puerto ${server.address().port}`)
+// });
+
+const port = process.env.PORT || 8000;
+app.listen(port, () => console.log(`Server running on port ${port}`) )
