@@ -2,6 +2,9 @@ const express = require("express");
 const passport = require("passport");
 const ProductsService = require("../../services/products");
 
+const cacheResponse = require("../../utils/cacheResponse");
+const { FIVE_MINUTES_IN_SECONDS, SIXTY_MINUTES_IN_SECONDS } = require("../../utils/time");
+
 // JWT Strategie
 require("../../utils/auth/strategies/jwt");
 
@@ -20,6 +23,8 @@ function productsApi(app){
     const productService = new ProductsService();
     
     router.get('/', async function(req, res, next) {
+        cacheResponse(res, FIVE_MINUTES_IN_SECONDS, SIXTY_MINUTES_IN_SECONDS)
+
         const { tags } = req.query;
     
         try {
@@ -36,6 +41,8 @@ function productsApi(app){
     })
     
     router.get('/:productId', async function(req, res, next) {
+        cacheResponse(res, SIXTY_MINUTES_IN_SECONDS);
+
         const { productId } = req.params
     
         try{
